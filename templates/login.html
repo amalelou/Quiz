@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz from audio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">    
+    <script>
+        function showWaiting() {
+            document.getElementById("waiting").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+    <div class="user">
+    <h1>Quiz from audio</h1>
+    <div class="uploading">
+    <h3>Choose an audio file</h3>
+    <form action="/transcribe" method="POST" enctype="multipart/form-data">
+        <label for="audio_input" class="audio-image">
+            <img src="static/upload.png" alt="Audio Icon">
+        </label>
+        <input type="file" id="audio_input" name="audio_file" accept="audio/*" style="display: none;">
+    </div>      
+        <button type="submit" onclick="showWaiting()">Transcribe</button>
+    </form>
+    
+    {% if transcription %}
+        <h3>Transcription Result:</h3>
+        <p>{{ transcription }}</p>
+        {% if output %}
+            <h3>Generated Google Form Link:</h3>
+            <p><a href="{{ output }}" target="_blank">Your quiz</a></p>
+        {% endif %}
+    {% endif %}
+    </div>
+    <div class="description"> 
+        <h1>Who am I?</h1>
+        <p>I am a bot that generates multiple choice questions. You just have to send an audio prompt in a .wav format, you will get a file containing a quiz of 10 multiple choice-questions about the subject you mentioned in prompt </p>
+        <img id="robot" src="static/R.jpg" width="200" height="200">
+        <p>Powered by:</p>
+        <div class="logos">
+        <img id="forms" src="static/Google-Forms.png">
+        <img id="openai" src="static/openai-logo.png">
+        </div>
+    </div>
+</div>
+</body>
+</html>
